@@ -1,5 +1,6 @@
 package edu.cs.utexas.HadoopEx;
 
+import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -11,12 +12,12 @@ import java.util.PriorityQueue;
 import org.apache.log4j.Logger;
 
 
-public class Task3TopKMapper extends Mapper<Text, Text, Text, IntWritable> {
+public class Task3TopKMapper extends Mapper<Text, Text, Text, Text> {
 
-	private Logger logger = Logger.getLogger(Task2TopKMapper.class);
+	private Logger logger = Logger.getLogger(Task3TopKMapper.class);
 
 
-	private PriorityQueue<Task2WordAndCount> pq;
+	private PriorityQueue<Task3WordAndCount> pq;
 
 	public void setup(Context context) {
 		pq = new PriorityQueue<>();
@@ -33,9 +34,12 @@ public class Task3TopKMapper extends Mapper<Text, Text, Text, IntWritable> {
 			throws IOException, InterruptedException {
 
 
-		int count = Integer.parseInt(value.toString());
+		String[] temp = value.toString().split(",");
+		
+		float money = Float.parseFloat(temp[0]);
+        int duration = Integer.parseInt(temp[1]);
 
-		pq.add(new Task2WordAndCount(new Text(key), new IntWritable(count)) );
+		pq.add(new Task3WordAndCount(new Text(key), new FloatWritable(money), new IntWritable(duration)) );
 
 		if (pq.size() > 10) {
 			pq.poll();
@@ -44,10 +48,10 @@ public class Task3TopKMapper extends Mapper<Text, Text, Text, IntWritable> {
 
 	public void cleanup(Context context) throws IOException, InterruptedException {
 
-
+		System.out.println("cleaning up");
 		while (pq.size() > 0) {
-			Task2WordAndCount wordAndCount = pq.poll();
-			context.write(wordAndCount.getWord(), wordAndCount.getCount());
+			Task3WordAndCount wordAndCount = pq.poll();
+			context.write(wordAndCount.getDriver(), new Text(wordAndCount.getMoney().get() + "," + wordAndCount.getSeconds().get()));
 			logger.info("TopKMapper PQ Status: " + pq.toString());
 		}
 	}

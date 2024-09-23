@@ -58,7 +58,7 @@ public class Task2TopKReducer extends  Reducer<Text, IntWritable, Text, IntWrita
        }
 
        // keep the priorityQueue size <= heapSize
-       while (pq.size() > 10) {
+       while (pq.size() > 5) {
            pq.poll();
        }
 

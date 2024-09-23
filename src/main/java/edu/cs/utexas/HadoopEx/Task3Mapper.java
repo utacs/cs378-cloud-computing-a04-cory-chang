@@ -7,7 +7,7 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class Task3Mapper extends Mapper<Object, Text, Text, IntWritable> {
+public class Task3Mapper extends Mapper<Object, Text, Text, Text> {
 
 	// Create a counter and initialize with 1
 	private final IntWritable counter = new IntWritable(1);
@@ -16,25 +16,17 @@ public class Task3Mapper extends Mapper<Object, Text, Text, IntWritable> {
 
 	public void map(Object key, Text value, Context context) 
 			throws IOException, InterruptedException {
+
 		try {
 			// Generate strings from 1 ride
-			String[] ride = value.toString().split(",");
-			String medallion = ride[0];
-			
-			// Check if the line is an error based on GPS coordinates (either a 0 or blank)
-			for (int i = 6; i < 10; i++) {
-				if (ride[i].equals("0")) {
-					word.set(medallion);
-					context.write(word, counter);
-				}
-				if (ride[i].equals("")) {
-					word.set(medallion);
-					context.write(word, counter);
-				}
+			String ride = value.toString();
+			TaxiData temp = new TaxiData(ride);
+			if (temp.isValid()) {
+				word.set(temp.getHackLic());
+				context.write(word, new Text(temp.getTotalAmount() + "," + temp.getDuration()));
 			}
 		} catch (Exception e) {
 			System.out.println("Error line: " + value.toString());
 		}
-		
 	}
 }

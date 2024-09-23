@@ -37,7 +37,7 @@ public class Task2TopKMapper extends Mapper<Text, Text, Text, IntWritable> {
 
 		pq.add(new Task2WordAndCount(new Text(key), new IntWritable(count)) );
 
-		if (pq.size() > 10) {
+		if (pq.size() > 5) {
 			pq.poll();
 		}
 	}
