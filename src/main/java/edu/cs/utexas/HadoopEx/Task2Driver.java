@@ -10,12 +10,13 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
+import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
-public class Task1 extends Configured implements Tool {
+public class Task2Driver extends Configured implements Tool {
 
 	/**
 	 * 
@@ -24,7 +25,7 @@ public class Task1 extends Configured implements Tool {
 	 */
 
 	public static void main(String[] args) throws Exception {
-		int res = ToolRunner.run(new Configuration(), new Task1(), args);
+		int res = ToolRunner.run(new Configuration(), new Task2Driver(), args);
 		System.exit(res);
 	}
 
@@ -36,13 +37,13 @@ public class Task1 extends Configured implements Tool {
 			Configuration conf = new Configuration();
 
 			Job job = new Job(conf, "WordCount");
-			job.setJarByClass(Task1.class);
+			job.setJarByClass(Task2Driver.class);
 
 			// specify a Mapper
-			job.setMapperClass(Task1Mapper.class);
+			job.setMapperClass(Task2Mapper.class);
 
 			// specify a Reducer
-			job.setReducerClass(Task1Reducer.class);
+			job.setReducerClass(Task2Reducer.class);
 
 			// specify output types
 			job.setOutputKeyClass(Text.class);
@@ -55,10 +56,37 @@ public class Task1 extends Configured implements Tool {
 			FileOutputFormat.setOutputPath(job, new Path(args[1]));
 			job.setOutputFormatClass(TextOutputFormat.class);
 
-			return (job.waitForCompletion(true) ? 0 : 1);
+			if (!job.waitForCompletion(true)) {
+				return 1;
+			}
+
+			Job job2 = new Job(conf, "TopK");
+			job2.setJarByClass(Task2Driver.class);
+
+			// specify a Mapper
+			job2.setMapperClass(Task2TopKMapper.class);
+
+			// specify a Reducer
+			job2.setReducerClass(Task2TopKReducer.class);
+
+			// specify output types
+			job2.setOutputKeyClass(Text.class);
+			job2.setOutputValueClass(IntWritable.class);
+
+			// set the number of reducer to 1
+			job2.setNumReduceTasks(1);
+
+			// specify input and output directories
+			FileInputFormat.addInputPath(job2, new Path(args[1]));
+			job2.setInputFormatClass(KeyValueTextInputFormat.class);
+
+			FileOutputFormat.setOutputPath(job2, new Path(args[2]));
+			job2.setOutputFormatClass(TextOutputFormat.class);
+
+			return (job2.waitForCompletion(true) ? 0 : 1);
 
 		} catch (InterruptedException | ClassNotFoundException | IOException e) {
-			System.err.println("Error during mapreduce job.");
+			System.err.println("Error during driver job.");
 			e.printStackTrace();
 			return 2;
 		}
