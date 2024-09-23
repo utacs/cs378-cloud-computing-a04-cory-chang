@@ -15,7 +15,7 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
-public class WordCount extends Configured implements Tool {
+public class Task1 extends Configured implements Tool {
 
 	/**
 	 * 
@@ -24,7 +24,7 @@ public class WordCount extends Configured implements Tool {
 	 */
 
 	public static void main(String[] args) throws Exception {
-		int res = ToolRunner.run(new Configuration(), new WordCount(), args);
+		int res = ToolRunner.run(new Configuration(), new Task1(), args);
 		System.exit(res);
 	}
 
@@ -36,13 +36,13 @@ public class WordCount extends Configured implements Tool {
 			Configuration conf = new Configuration();
 
 			Job job = new Job(conf, "WordCount");
-			job.setJarByClass(WordCount.class);
+			job.setJarByClass(Task1.class);
 
 			// specify a Mapper
-			job.setMapperClass(WordCountMapper.class);
+			job.setMapperClass(Task1Mapper.class);
 
 			// specify a Reducer
-			job.setReducerClass(WordCountReducer.class);
+			job.setReducerClass(Task1Reducer.class);
 
 			// specify output types
 			job.setOutputKeyClass(Text.class);
