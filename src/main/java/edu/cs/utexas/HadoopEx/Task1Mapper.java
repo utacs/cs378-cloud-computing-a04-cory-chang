@@ -20,24 +20,20 @@ public class Task1Mapper extends Mapper<Object, Text, IntWritable, IntWritable> 
         try {
             // Generate strings from 1 ride
             String[] ride = value.toString().split(",");
-            String hour = ride[2].substring(11,13);
-            int num_hr = Integer.valueOf(hour) + 1;
+            int pickupHr = Integer.valueOf(ride[2].substring(11,13)) + 1;
             //System.out.println(hour);
             if(ride.length == 17) {
                 // Check if the line is an error based on GPS coordinates (either a 0 or blank)
                 // float n = Float.parseFloat(hour);
-                for (int i = 6; i < 10; i++) {
-                    try {
-                        float c1 = Float.parseFloat(ride[i]);
-                        if (ride[i].equals("") || c1 == 0) {
-                            context.write(new IntWritable(num_hr), counter);
+                try {
+                    for (int i = 6; i < 10; i++) {
+                        if (ride[i].equals("") || Float.parseFloat(ride[i]) == 0) {
+                            context.write(new IntWritable(pickupHr), counter);
+                            break;
 						}
                     }
-                	catch (Exception e)
-                    {
-						System.out.println("Error line");
-                        // context.write(new IntWritable(num_hr), counter); 
-                    }
+                } catch (Exception e) {
+                    System.out.println("Error line");
                 }
             }
             else
