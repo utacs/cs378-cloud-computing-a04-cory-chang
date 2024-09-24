@@ -80,7 +80,7 @@ public class Task3TopKReducer extends Reducer<Text, Text, Text, Text> {
         Collections.reverse(values);
 
         for (Task3WordAndCount value : values) {
-            context.write(value.getDriver(), new Text("" + (value.getMoney().get() / value.getSeconds().get())));
+            context.write(value.getDriver(), new Text("" + ((value.getMoney().get() / (value.getSeconds().get())) * 60)));
             //logger.info("TopKReducer - Top-10 Words are:  " + value.getWord() + "  Count:" + value.getCount());
         }
 

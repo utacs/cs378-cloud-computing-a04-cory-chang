@@ -37,7 +37,7 @@ public class Task3WordAndCount implements Comparable<Task3WordAndCount> {
         @Override
         public int compareTo(Task3WordAndCount other) {
 
-            float diff = (this.money.get() / this.seconds.get()) - ( other.money.get() / other.seconds.get());
+            float diff = (this.money.get() / this.seconds.get()) - (other.money.get() / other.seconds.get());
             if (diff > 0) {
                 return 1;
             } else if (diff < 0) {
