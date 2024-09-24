@@ -14,27 +14,33 @@ public class Task2Mapper extends Mapper<Object, Text, Text, IntWritable> {
 	// Create a hadoop text object to store words
 	private Text word = new Text();
 
-	public void map(Object key, Text value, Context context) 
+	public void map(Object key, Text value, Context context)
 			throws IOException, InterruptedException {
+
 		try {
 			// Generate strings from 1 ride
 			String[] ride = value.toString().split(",");
 			String medallion = ride[0];
-			
-			// Check if the line is an error based on GPS coordinates (either a 0 or blank)
-			for (int i = 6; i < 10; i++) {
-				if (ride[i].equals("0")) {
-					word.set(medallion);
-					context.write(word, counter);
+			// System.out.println(hour);
+			if (ride.length == 17) {
+				// Check if the line is an error based on GPS coordinates (either a 0 or blank)
+				// float n = Float.parseFloat(hour);
+				for (int i = 6; i < 10; i++) {
+					try {
+						float c1 = Float.parseFloat(ride[i]);
+						if (ride[i].equals("") || c1 == 0) {
+							word.set(medallion);
+							context.write(word, counter);
+						}
+					} catch (Exception e) {
+						System.out.println("Error line");
+					}
 				}
-				if (ride[i].equals("")) {
-					word.set(medallion);
-					context.write(word, counter);
-				}
+			} else {
+				System.out.println("Not enough attributes!");
 			}
 		} catch (Exception e) {
 			System.out.println("Error line: " + value.toString());
 		}
-		
 	}
 }
