@@ -12,7 +12,7 @@ public class Task1Mapper extends Mapper<Object, Text, IntWritable, IntWritable> 
     // Create a counter and initialize with 1
     private final IntWritable counter = new IntWritable(1);
     // Create a hadoop text object to store words
-    private Text word = new Text();
+    // private Text word = new Text();
 
     public void map(Object key, Text value, Context context) 
             throws IOException, InterruptedException {
@@ -21,7 +21,7 @@ public class Task1Mapper extends Mapper<Object, Text, IntWritable, IntWritable> 
             // Generate strings from 1 ride
             String[] ride = value.toString().split(",");
             String hour = ride[2].substring(11,13);
-            int num_hr = Integer.valueOf(hour) + 1;
+            IntWritable num_hr  = new IntWritable(Integer.valueOf(hour) + 1);
             //System.out.println(hour);
             if(ride.length == 17) {
                 // Check if the line is an error based on GPS coordinates (either a 0 or blank)
@@ -29,14 +29,19 @@ public class Task1Mapper extends Mapper<Object, Text, IntWritable, IntWritable> 
                 for (int i = 6; i < 10; i++) {
                     try {
                         float c1 = Float.parseFloat(ride[i]);
-                        if (ride[i].equals("") || c1 == 0) {
-                            context.write(new IntWritable(num_hr), counter);
-						}
+                        if (c1 == 0) {
+                            // word.set(String.valueOf(num_hr));
+                            context.write(num_hr, counter);
+                        }
+                        else if (ride[i].equals("")) {
+                            // word.set(String.valueOf(num_hr));
+                            context.write(num_hr, counter);
+                        }
                     }
-                	catch (Exception e)
+                    catch (Exception e)
                     {
-						System.out.println("Error line");
-                        // context.write(new IntWritable(num_hr), counter); 
+                        // word.set(String.valueOf(num_hr));
+                        context.write(num_hr, counter); 
                     }
                 }
             }
@@ -47,5 +52,7 @@ public class Task1Mapper extends Mapper<Object, Text, IntWritable, IntWritable> 
         } catch (Exception e) {
             System.out.println("Error line: " + value.toString());
         }
+        
+        
     }
 }
