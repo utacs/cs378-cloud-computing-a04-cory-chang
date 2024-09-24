@@ -45,7 +45,7 @@ public class Task1Driver extends Configured implements Tool {
 			job.setReducerClass(Task1Reducer.class);
 
 			// specify output types
-			job.setOutputKeyClass(Text.class);
+			job.setOutputKeyClass(IntWritable.class);
 			job.setOutputValueClass(IntWritable.class);
 
 			// specify input and output directories
