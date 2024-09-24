@@ -12,7 +12,7 @@ public class Task1Mapper extends Mapper<Object, Text, IntWritable, IntWritable> 
     // Create a counter and initialize with 1
     private final IntWritable counter = new IntWritable(1);
     // Create a hadoop text object to store words
-    private Text word = new Text();
+    // private Text word = new Text();
 
     public void map(Object key, Text value, Context context) 
             throws IOException, InterruptedException {
@@ -25,15 +25,18 @@ public class Task1Mapper extends Mapper<Object, Text, IntWritable, IntWritable> 
             if(ride.length == 17) {
                 // Check if the line is an error based on GPS coordinates (either a 0 or blank)
                 // float n = Float.parseFloat(hour);
-                try {
-                    for (int i = 6; i < 10; i++) {
-                        if (ride[i].equals("") || Float.parseFloat(ride[i]) == 0) {
-                            context.write(new IntWritable(pickupHr), counter);
-                            break;
+                for (int i = 6; i < 10; i++) {
+                    try {
+                        float c1 = Float.parseFloat(ride[i]);
+                        if (ride[i].equals("") || c1 == 0) {
+                            context.write(new IntWritable(num_hr), counter);
 						}
                     }
-                } catch (Exception e) {
-                    System.out.println("Error line");
+                	catch (Exception e)
+                    {
+						System.out.println("Error line");
+                        // context.write(new IntWritable(num_hr), counter); 
+                    }
                 }
             }
             else
@@ -43,5 +46,7 @@ public class Task1Mapper extends Mapper<Object, Text, IntWritable, IntWritable> 
         } catch (Exception e) {
             System.out.println("Error line: " + value.toString());
         }
+        
+        
     }
 }
