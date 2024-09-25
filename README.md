@@ -2,13 +2,17 @@
 
 ## Team members' names 
 
-1. Student Name:
+1. Student Name: Cory Chang
 
-   Student UT EID:
+   Student UT EID: CCC4497
 
-2. Student Name:
+2. Student Name: Christine Yuan
 
-   Student UT EID:
+   Student UT EID: CY6969
+
+3. Student Name: Pranjal Rai
+
+   Student UT EID: PR24977
 
  ...
 
