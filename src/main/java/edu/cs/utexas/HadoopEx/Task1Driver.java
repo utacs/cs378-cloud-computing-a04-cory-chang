@@ -36,6 +36,7 @@ public class Task1Driver extends Configured implements Tool {
 			Configuration conf = new Configuration();
 
 			Job job = new Job(conf, "WordCount");
+			job.setNumReduceTasks(1);
 			job.setJarByClass(Task1Driver.class);
 
 			// specify a Mapper

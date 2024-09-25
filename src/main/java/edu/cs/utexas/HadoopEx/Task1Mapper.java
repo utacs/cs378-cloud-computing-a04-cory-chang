@@ -33,10 +33,12 @@ public class Task1Mapper extends Mapper<Object, Text, IntWritable, IntWritable> 
                     }
                 } catch (Exception e) {
                     System.out.println("Error line");
+                    context.write(new IntWritable(pickupHr), counter);
                 }
             }
             else
             {
+                context.write(new IntWritable(pickupHr), counter);
                 System.out.println("Not enough attributes!");
             }
         } catch (Exception e) {
