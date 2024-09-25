@@ -24,6 +24,7 @@
 
 # Add your Project REPORT HERE 
 
+![image](cluster-setup.png)
 ![image](YARN-history.png)
 
 # Project Template
