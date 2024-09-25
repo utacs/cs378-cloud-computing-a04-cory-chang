@@ -37,6 +37,7 @@ public class Task3Driver extends Configured implements Tool {
 			Configuration conf = new Configuration();
 
 			Job job = new Job(conf, "WordCount");
+			job.setNumReduceTasks(1);
 			job.setJarByClass(Task3Driver.class);
 
 			// specify a Mapper
@@ -61,6 +62,7 @@ public class Task3Driver extends Configured implements Tool {
 			}
 
 			Job job2 = new Job(conf, "TopK");
+			job2.setNumReduceTasks(1);
 			job2.setJarByClass(Task3Driver.class);
 
 			// specify a Mapper
