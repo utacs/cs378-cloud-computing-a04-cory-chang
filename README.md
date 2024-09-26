@@ -52,7 +52,8 @@
 23    160924
 24    142821
 ```
-![image](YARN-history.png)
+![image](task1-yarn1.png)
+![image](task1-yarn2.png)
 
 ## Task 2 Output:
 
@@ -63,6 +64,8 @@
 FE757A29F1129533CD6D4A0EC6034106    1.0
 FF96A951C04FBCEDE5BCB473CF5CBDBF    1.0
 ```
+![image](task2-yarn1.png)
+![image](task2-yarn2.png)
 
 ## Task 3 Output:
 
