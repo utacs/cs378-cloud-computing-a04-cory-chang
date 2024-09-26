@@ -69,6 +69,7 @@ FF96A951C04FBCEDE5BCB473CF5CBDBF    1.0
 ```
 
 ```
+## Cloud Setup:
 
 ![image](cluster-setup.png)
 
