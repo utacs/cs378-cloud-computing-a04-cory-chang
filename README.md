@@ -24,8 +24,53 @@
 
 # Add your Project REPORT HERE 
 
-![image](cluster-setup.png)
+## Task 1 Output:
+
+```
+1    116055
+2    89526
+3    69277
+4    54444
+5    42140
+6    36306
+7    67436
+8    108479
+9    127918
+10    130800
+11    127126
+12    131993
+13    139394
+14    140292
+15    147635
+16    145712
+17    127443
+18    149571
+19    174809
+20    179546
+21    168344
+22    167194
+23    160924
+24    142821
+```
 ![image](YARN-history.png)
+
+## Task 2 Output:
+
+```
+00AC8ED3B4327BDD4EBBEBCB2BA10A00    1.0
+00DC83118CA675B9A2876C35E3398AF5    1.0
+0219EB9A4C74AAA118104359E5A5914C    1.0
+FE757A29F1129533CD6D4A0EC6034106    1.0
+FF96A951C04FBCEDE5BCB473CF5CBDBF    1.0
+```
+
+## Task 3 Output:
+
+```
+
+```
+
+![image](cluster-setup.png)
 
 # Project Template
 
