@@ -81,6 +81,9 @@ E9DA1D289A7E321CC179C51C0C526A73    231.3
 FA587EC2731AAB9F2952622E89088D4B    180.0
 E79402C516CEF1A6BB6F526A142597D4    144.54546
 ```
+![image](task3-yarn1.png)
+![image](task3-yarn2.png)
+
 ## Cloud Setup:
 
 ![image](cluster-setup.png)
